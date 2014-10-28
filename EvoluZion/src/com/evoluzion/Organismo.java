@@ -225,17 +225,17 @@ public class Organismo implements Comparable<Organismo>{
 		StringBuffer sb= new StringBuffer();
 		
 		if(mu.colectColor==true){sb.append(this.color);}
-		if(mu.colectarancho==true){sb.append(this.ancho);}
-		if(mu.colectaralto==true){sb.append(this.alto);}
-		if(mu.colectSpeed==true){sb.append(this.speed);}
-		if(mu.colectRadioconsiente==true){sb.append(this.radioConsiente);}
+		if(mu.colectarancho==true){sb.append((int)this.ancho*100);}
+		if(mu.colectaralto==true){sb.append((int)this.alto*100);}
+		if(mu.colectSpeed==true){sb.append((int)this.speed*100);}
+		if(mu.colectRadioconsiente==true){sb.append((int)this.radioConsiente*100);}
 		if(mu.colectarLongevidad==true){sb.append(this.longevidad);}
 		if(mu.colectarTasaMut==true){sb.append(this.tasaMut);}
 		if(mu.colectSentir==true){sb.append(this.sentI);}
 		if(mu.colectPredador==true){sb.append(this.carniI);}
 		if(mu.colectEscapar==true){sb.append(this.escapI);}
 		if(mu.colectCazar==true){sb.append(this.cazarI);}
-		if(mu.colectarTemp==true){sb.append(this.toleranciaTemp);}
+		if(mu.colectarTemp==true){sb.append((int)this.toleranciaTemp*100);}
 		if(mu.colectarResistencia==true){sb.append(this.resistenciaI);}
 		
 //		if(mu.colectColor==true){sb.append(this.adn.traducir(adn.color));}
