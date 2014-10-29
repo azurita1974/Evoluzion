@@ -1157,7 +1157,25 @@ public class MenuInicio implements Screen, Serializable {
 			  	  m.f_proteoma.creararchivo(ruta+m.nombre+tx.proteomaTXT);
 			      m.f_proteoma.escribirArchivo(tx.cuandoEstenPresntesProt+genesPedidos().toString()+ "\n");
 			      m.f_mutantes.creararchivo(ruta+m.nombre+tx.mutantesXLS);
-			      m.f_mutantes.escribirArchivo(tx.tiempo+","+tx.nombre+","+tx.cantidad+"\n");
+			      
+			      StringBuffer linea = new StringBuffer(tx.tiempo+","+tx.nombre+","+tx.cantidad+"");
+			      
+			      if(cb_colectarSize.isChecked()){linea.append(", "+ tx.alto);}
+			      if(cb_colectarSize.isChecked()){linea.append(", "+ tx.ancho);}
+			      if(cb_colectarSpeed.isChecked()){linea.append(", "+ tx.velocidad);}
+			      if(cb_colectarColor.isChecked()){linea.append(", "+ tx.color);}
+			      if(cb_colectarTasaMut.isChecked()){linea.append(", "+ tx.fidelidadADNpol);}
+			      if(cb_colectarTolerancia.isChecked()){linea.append(", "+ tx.temOptima);}
+			      if(cb_colectarLongevidad.isChecked()){linea.append(", "+ tx.longevidad);}
+			      if(cb_colectarRadioCon.isChecked()){linea.append(", "+ tx.alcanceVisual);}
+			      if(cb_colectarPredador.isChecked()){linea.append(", "+ tx.genPredador);}
+			      if(cb_colectarSentir.isChecked()){linea.append(", "+ tx.sentidos);}
+			      if(cb_colectarCazar.isChecked()){linea.append(", "+ tx.buscarComida);}
+			      if(cb_colectarEscapar.isChecked()){linea.append(", "+ tx.escapar);}
+			      if(cb_colectarResistencia.isChecked()){linea.append(", "+ tx.resistensiaATB);}
+			      linea.append("\n");
+			      
+			      m.f_mutantes.escribirArchivo(linea.toString());
 			      m.f_arbol.creararchivo(ruta+m.nombre+tx.arbolTXT);
 			    
 			    // System.out.println(m.segundos);

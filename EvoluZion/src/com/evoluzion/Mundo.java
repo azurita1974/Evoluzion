@@ -345,7 +345,7 @@ public int tasaMutMedio(){
 		medMut= medMut+ aorg.get(i).tasaMut;}}
 	if(size==0){size=1;}
 	
-	return (medMut/size)/2;}
+	return (medMut/size);}
 
 public float longevidadMedio(){
 	medLon=0;
@@ -703,21 +703,23 @@ if(aorg.size>0){
 		   Organismo  or= aEspesies.get(i);
 		   
 		linea.replace(0, linea.length(), "");     
-		linea.append(" "+","+or.nombre.toString()+","+or.cantidad+"\n");
+		linea.append(" "+","+or.nombre.toString()+","+or.cantidad);
 					
-//					tx.alto+": "+or.alto+"//"+
-//					tx.ancho+": "+ or.ancho+"//"+
-//					tx.velocidad+": "+or.speed+"\n"+
-//					tx.color+ ": "+or.color+"//"+
-//					tx.fidelidadADNpol+ ": "+ or.tasaMut+"//"+
-//					tx.temOptima+": "+ or.tempOptima+" ("+tx.grados+")\n"+
-//					tx.longevidad+": "+ or.longevidad/1000+" (seg)//"+
-//					tx.alcanceVisual+": "+or.radioConsiente+"//"+
-//					tx.genPredador +": "+ or.carnivoro+ "\n"+
-//					tx.sentidos+": "+ or.sentir+"//"+
-//					tx.buscarComida+ ": "+or.cazar+"//"+
-//					tx.escapar+ ": "+ or.escapar+"//"+
-//					tx.resistensiaATB+": "+or.resistenciaATB +"\n\n");
+			if(colectaralto==true){ linea.append(","+or.alto);}
+			if(colectarancho==true){ linea.append(","+or.ancho);}
+			if(colectSpeed==true){ linea.append(","+or.speed);}
+			if(colectColor==true){ linea.append(","+or.color);}
+			if(colectarTasaMut==true){ linea.append(","+or.tasaMut);}
+			if(colectarTemp==true){ linea.append(","+or.tempOptima);}
+			if(colectarLongevidad==true){ linea.append(","+or.longevidad);}
+			if(colectRadioconsiente==true){ linea.append(","+or.radioConsiente);}
+			if(colectPredador==true){ linea.append(","+or.carnivoro);}
+			if(colectSentir==true){ linea.append(","+or.sentir);}
+			if(colectCazar==true){ linea.append(","+or.cazar);}
+			if(colectEscapar==true){ linea.append(","+or.escapar);}
+			if(colectarResistencia==true){ linea.append(","+or.resistenciaATB);}
+			linea.append("\n");
+			
 			
 	f_mutantes.escribirArchivo(linea.toString());}
 	//f_fenoma.escribirArchivo();
