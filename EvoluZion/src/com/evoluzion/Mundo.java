@@ -100,6 +100,8 @@ float deltaTime1,deltaTime2;
 
 int antibiotico= -1; //1= true -1= false
 
+int horizontalTransferRate;
+
 boolean colectarancho=false;
 boolean colectaralto=false;
 boolean colectSpeed=false;
@@ -1075,68 +1077,68 @@ public void detectarColiciones(){
 
 public void horizontalTransfer(Organismo or1, Organismo or2){
 	
-	int random = (int) (Math.random()*1000000);
-	int pos = (int) (Math.random()*100);
+	if(horizontalTransferRate>0){
+	int random = (int) (Math.random()*horizontalTransferRate);//
+	//int pos = (int) (Math.random()*100);
 	int gentipe = (int) (Math.random()*12);
 	
 	if(random==0){
 		
 	switch (gentipe) {	
-	case 0: if (pos<50){or1.adn.alto.insert(0, or2.adn.alto);}
-	        if (pos>=50){or1.adn.alto.append(or2.adn.alto);}    
+	case 0: or1.adn.alto.insert(0, or2.adn.alto);
+	       // if (pos>=50){or1.adn.alto.append(or2.adn.alto);}    
 	break;
-	case 1: if (pos<50){or1.adn.ancho.insert(0, or2.adn.ancho);}
-    if (pos>=50){or1.adn.ancho.append(or2.adn.ancho);}    
+	case 1: or1.adn.ancho.insert(0, or2.adn.ancho);
+   // if (pos>=50){or1.adn.ancho.append(or2.adn.ancho);}    
     break;
     
-	case 2: if (pos<50){or1.adn.color.insert(0, or2.adn.color);}
-    if (pos>=50){or1.adn.color.append(or2.adn.color);}    
+	case 2:  or1.adn.color.insert(0, or2.adn.color);
+    //if (pos>=50){or1.adn.color.append(or2.adn.color);}    
     break;
     
-	case 3: if (pos<50){or1.adn.speed.insert(0, or2.adn.speed);}
-    if (pos>=50){or1.adn.speed.append(or2.adn.speed);}    
+	case 3:  or1.adn.speed.insert(0, or2.adn.speed);
+   // if (pos>=50){or1.adn.speed.append(or2.adn.speed);}    
     break;
 	
-	case 4: if (pos<50){or1.adn.predador.insert(0, or2.adn.predador);}
-    if (pos>=50){or1.adn.predador.append(or2.adn.predador);}    
+	case 4: or1.adn.predador.insert(0, or2.adn.predador);
+    //if (pos>=50){or1.adn.predador.append(or2.adn.predador);}    
     break;
     
-	case 5: if (pos<50){or1.adn.sentir.insert(0, or2.adn.sentir);}
-    if (pos>=50){or1.adn.sentir.append(or2.adn.sentir);}    
+	case 5: or1.adn.sentir.insert(0, or2.adn.sentir);
+   // if (pos>=50){or1.adn.sentir.append(or2.adn.sentir);}    
     break;
     
-	case 6: if (pos<50){or1.adn.cazar.insert(0, or2.adn.cazar);}
-    if (pos>=50){or1.adn.cazar.append(or2.adn.cazar);}    
+	case 6: or1.adn.cazar.insert(0, or2.adn.cazar);
+    //if (pos>=50){or1.adn.cazar.append(or2.adn.cazar);}    
     break;
     
-	case 7: if (pos<50){or1.adn.escapar.insert(0, or2.adn.escapar);}
-    if (pos>=50){or1.adn.escapar.append(or2.adn.escapar);}    
+	case 7: or1.adn.escapar.insert(0, or2.adn.escapar);
+    //if (pos>=50){or1.adn.escapar.append(or2.adn.escapar);}    
     break;
     
-	case 8: if (pos<50){or1.adn.radioConsiente.insert(0, or2.adn.radioConsiente);}
-    if (pos>=50){or1.adn.radioConsiente.append(or2.adn.radioConsiente);}    
+	case 8: or1.adn.radioConsiente.insert(0, or2.adn.radioConsiente);
+   // if (pos>=50){or1.adn.radioConsiente.append(or2.adn.radioConsiente);}    
     break;
     
-	case 9: if (pos<50){or1.adn.tasaMutacion.insert(0, or2.adn.tasaMutacion);}
-    if (pos>=50){or1.adn.tasaMutacion.append(or2.adn.tasaMutacion);}    
+	case 9: or1.adn.tasaMutacion.insert(0, or2.adn.tasaMutacion);
+   // if (pos>=50){or1.adn.tasaMutacion.append(or2.adn.tasaMutacion);}    
     break;
     
-	case 10: if (pos<50){or1.adn.longevidad.insert(0, or2.adn.longevidad);}
-    if (pos>=50){or1.adn.longevidad.append(or2.adn.longevidad);}    
+	case 10: or1.adn.longevidad.insert(0, or2.adn.longevidad);
+   // if (pos>=50){or1.adn.longevidad.append(or2.adn.longevidad);}    
     break;
     
-	case 11: if (pos<50){or1.adn.toleranciaTemp.insert(0, or2.adn.toleranciaTemp);}
-    if (pos>=50){or1.adn.toleranciaTemp.append(or2.adn.toleranciaTemp);}    
+	case 11: or1.adn.toleranciaTemp.insert(0, or2.adn.toleranciaTemp);
+   // if (pos>=50){or1.adn.toleranciaTemp.append(or2.adn.toleranciaTemp);}    
     break;
     
-	case 12: if (pos<50){or1.adn.resistenciaATB.insert(0, or2.adn.resistenciaATB);}
-    if (pos>=50){or1.adn.resistenciaATB.append(or2.adn.resistenciaATB);}    
+	case 12: or1.adn.resistenciaATB.insert(0, or2.adn.resistenciaATB);
+   // if (pos>=50){or1.adn.resistenciaATB.append(or2.adn.resistenciaATB);}    
     break;
    
 	}
 	 //System.out.println("Se tranfirio un gen");
-	}
-	
+	}}	
 }
 
 public void dispose(){

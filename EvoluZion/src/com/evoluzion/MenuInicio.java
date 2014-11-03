@@ -170,6 +170,7 @@ public class MenuInicio implements Screen, Serializable {
 	private CheckBox cb_colectarResistencia;
 	private TextField tf_ATB;
 	private TextButton b_Idioma;
+	private TextField tf_HorizontalTransfer;
 	
  
 	
@@ -520,6 +521,9 @@ public class MenuInicio implements Screen, Serializable {
 		fuente.draw(batch,tx.marcarMutAnalizar, 80+orX, 190+orY);
 		
 		fuente.draw(batch,tx.multiploADNpol, 65+orX, -15+orY);
+		
+		fuente.draw(batch,"1/", 20+orX, -45+orY);
+		fuente.draw(batch,tx.horizontalTransferRate, 120+orX, -45+orY);
 	//	fuente.draw(batch,"* Múltiplo que afecta la eficiencia de la ADN polimerasa", 20+orX, -40+orY);
 		
 		
@@ -837,6 +841,11 @@ public class MenuInicio implements Screen, Serializable {
 			 	tf_MultiploPol.setSize(40, 20);
 			 	tf_MultiploPol.setCursorPosition(0);
 			 	tf_MultiploPol.setPosition(20+orX, -30+orY);
+			 	
+			 	tf_HorizontalTransfer = new TextField("500000", tfs_text);
+			 	tf_HorizontalTransfer.setSize(80, 20);
+			 	tf_HorizontalTransfer.setCursorPosition(0);
+			 	tf_HorizontalTransfer.setPosition(35+orX, -60+orY);
 				
 				
 				
@@ -896,6 +905,7 @@ public class MenuInicio implements Screen, Serializable {
 				stage.addActor(tf_DeltaTiempo1);
 				stage.addActor(tf_DeltaTiempo2);
 				stage.addActor(tf_MultiploPol);
+				stage.addActor(tf_HorizontalTransfer);
 				
 				
 				b_Informacion.addListener(new InputListener() {
@@ -1035,6 +1045,7 @@ public class MenuInicio implements Screen, Serializable {
 					private int DeltaTiempo1;
 					private int DeltaTiempo2;
 					private float eficiencia;
+					private int horizontalTransferRate;
 
 					public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 			      
@@ -1059,6 +1070,7 @@ public class MenuInicio implements Screen, Serializable {
 						DeltaTiempo1= Integer.parseInt(tf_DeltaTiempo1.getText());
 						DeltaTiempo2= Integer.parseInt(tf_DeltaTiempo2.getText());
 						eficiencia= Float.parseFloat(tf_MultiploPol.getText());
+						horizontalTransferRate= Integer.parseInt(tf_HorizontalTransfer.getText());
 						
 					} catch (NumberFormatException e) {
 						Senergia=20;
@@ -1079,6 +1091,7 @@ public class MenuInicio implements Screen, Serializable {
 						DeltaTiempo1= 0;
 						DeltaTiempo2= 0;
 						eficiencia=1;
+						horizontalTransferRate=5000000;
 
 						e.printStackTrace();
 					}
@@ -1100,6 +1113,7 @@ public class MenuInicio implements Screen, Serializable {
 			      m.TempFinal1 = TempFinal1;
 			      m.TempFinal2 = TempFinal2;
 			      m.eficiencia = eficiencia;
+			      m.horizontalTransferRate= horizontalTransferRate;
 			      
 			      
 			      if (DeltaTiempo1!= 0){m.tempXSecond1 = (TempFinal1-Temperatura)/(DeltaTiempo1*60);}

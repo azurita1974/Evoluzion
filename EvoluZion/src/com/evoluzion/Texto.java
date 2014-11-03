@@ -51,6 +51,7 @@ public class Texto {
 	String marcarGenesMutaran = "Marcar los genes que se mutarán";
 	String marcarMutAnalizar ="Marcar las mutaciones a analizar";
 	String multiploADNpol = "Múltiplo que afecta la eficiencia de la ADN-pol";
+	String horizontalTransferRate= "Frecuencia de la transferencia horizontal (0= Sin transferencia)";
 	String comenzar = "COMENZAR";
 	String sobreEvolizion = "Sobre EvoluZion";
 	String directorioTrabajo2 = "Directorio de trabajo";
@@ -170,6 +171,7 @@ public void setEspanol(){
 	 marcarGenesMutaran = "Marcar los genes que se mutarán";
 	 marcarMutAnalizar ="Marcar las mutaciones a analizar";
 	 multiploADNpol = "Múltiplo que afecta la eficiencia de la ADN-pol";
+	 horizontalTransferRate= "Frecuencia de la transferencia horizontal (0= Sin transferencia)";
 	 comenzar = "COMENZAR";
 	sobreEvolizion = "Sobre EvoluZion";
 	directorioTrabajo2 = "Directorio de trabajo";
@@ -284,6 +286,7 @@ public void setIngles(){
 	 marcarGenesMutaran = "Mark genes allowed to mutate";
 	 marcarMutAnalizar ="Mark mutations you want to analyse";
 	 multiploADNpol = "Multiple that affect DNApol efficiency";
+	 horizontalTransferRate= "Horizontal transfer rate  (0 = no transfer)";
 	 comenzar = "START";
 	sobreEvolizion = "About EvoluZion";
 	directorioTrabajo2 = "Working folder";

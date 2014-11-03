@@ -25,6 +25,7 @@ import java.text.NumberFormat;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -33,6 +34,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.sun.org.apache.xml.internal.serializer.ToStream;
@@ -42,6 +44,8 @@ public class Organismo implements Comparable<Organismo>{
 	private Mundo m;
 	
 	Sprite imagen,imagen2,imagen3;
+	Sprite auraATB;
+	
 	float speed;
 	float radioConsiente; //radio de los sentidos
 	float toleranciaTemp;
@@ -199,6 +203,10 @@ public class Organismo implements Comparable<Organismo>{
 		imagen3.setPosition(this.posicion.x,this.posicion.y);
 		imagen3.setSize(ancho, alto);
 		
+		auraATB = new Sprite(new Texture("data/auraATB.png"));
+		auraATB.setPosition(this.posicion.x,this.posicion.y);
+		auraATB.setSize(ancho+3, alto+3);
+		
 		
 		borde.height= alto;
 		borde.width=  ancho;
@@ -263,6 +271,7 @@ public class Organismo implements Comparable<Organismo>{
 		imagen.draw(sb);
 		if(carnivoro==true){imagen2.draw(sb);}
 		if(sentir==true){imagen3.draw(sb);}
+		if(resistenciaATB==true){auraATB.draw(sb);}
 		sb.end();
 		
 	}
@@ -329,6 +338,7 @@ public class Organismo implements Comparable<Organismo>{
 	//imagen2.setSize(ancho, alto);
 	imagen3.setPosition(posicion.x,posicion.y);
 	//imagen3.setSize(ancho, alto);
+	auraATB.setPosition(posicion.x-1.5f,posicion.y-1.5f);
 	
 	borde.x=posicion.x;
 	borde.y=posicion.y;
@@ -843,6 +853,8 @@ if(segundos>= tiempoMitosis/1000 && m.aorg.size<m.maximo){
 		}
 	
 	}
+	
+	
 	//System.out.println(str);
 	return str.toString();
 	}
@@ -852,12 +864,25 @@ if(segundos>= tiempoMitosis/1000 && m.aorg.size<m.maximo){
 	    return nombre.toString();
 	}
 
+	@Override
+	public int compareTo(Organismo arg0) {
+		{
+		    // The order of two Organism's is determined by the name.
+		    String p2Name = arg0.nombre.toString();
+		    int result = nombre.toString().compareTo(p2Name); 
+		    if (result < 0)
+		      return 1;         // or any negative int
+		    else if (result > 0)
+		      return -1;          // or any positive int
+		    else
+		      return 0;
+		  }
+		
+	}
+
 	
 
-	@Override
-	public int compareTo(Organismo o) {
-		
-		return 0;
-	}
+	
+	
 	
 }
