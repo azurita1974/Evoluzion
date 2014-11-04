@@ -89,13 +89,13 @@ public class Texto {
 	String deseaSalir= "¿Desea salir del programa?";
 	String cuandoEstenPresentes = "Los genes (cuando están presentes) aparecen en el siguiente orden: \n ";
 	String genomasTXT = "_Genomas.txt";
-	String datosXls = "_datos_.xls";
+	String datosXls = "_Datos_.csv";
 	String datosOrdenados = "Tiempo,Organismos,Mutantes,Predadores,Res.ATB,Vel Media, Tam. Medio,Long Media, Fidelidad ADNpol Media, Temperatura, Temp. Optima Media   \n";
 	String proteomaTXT = "_Proteoma.txt";
 	String cuandoEstenPresntesProt = "Las proteínas (cuando están presentes) aparecen en el siguiente orden: \n";
 	String arbolTXT = "_Arbol.txt";
 	String fenomaTXT= "_Fenotipo.txt";
-	String mutantesXLS= "_Mutantes.xls";
+	String mutantesXLS= "_Mutantes.csv";
 	String idioma ="Set to english";
 	String losCambiosReiniciar= "Algunos cambios se completarán luego de reiniciar";
 	
@@ -209,13 +209,13 @@ public void setEspanol(){
 	deseaSalir= "¿Desea salir del programa?";
 	cuandoEstenPresentes = "Los genes (cuando están presentes) aparecen en el siguiente orden: \n ";
 	genomasTXT = "_Genomas.txt";
-	datosXls = "_datos_.xls";
+	datosXls = "_Datos_.csv";
 	datosOrdenados = "Tiempo,Organismos,Mutantes,Predadores,Res.ATB,Vel Media, Tam. Medio,Long Media, Fidelidad ADNpol Media, Temperatura, Temp. Óptima Media   \n";
 	proteomaTXT = "_Proteoma.txt";
 	cuandoEstenPresntesProt = "Las proteínas (cuando están presentes) aparecen en el siguiente orden: \n";
 	arbolTXT = "_Arbol.txt";
 	fenomaTXT= "_Fenotipo.txt";
-	mutantesXLS= "_Mutantes.xls";
+	mutantesXLS= "_Mutantes.csv";
 	idioma ="Set to english";
 	losCambiosReiniciar= "Algunos cambios se completarán luego de reiniciar";
 	//de la pantalla
@@ -324,13 +324,13 @@ public void setIngles(){
 	deseaSalir= "Do you want to exit the program?";
 	cuandoEstenPresentes = "The genes (when present) appear in the following order: \n ";
 	genomasTXT = "_Genome.txt";
-	datosXls = "_data.xls";
+	datosXls = "_Data.csv";
 	datosOrdenados = "Time,Organism,Mutant,Predators,ATB Res.,Avg. Speed,Avg. Size,Avg. Lifespan,Avg. ADNpol fidelity, Temperature,Avg. Optimal temp. \n";
 	proteomaTXT = "_Proteome.txt";
 	cuandoEstenPresntesProt = "The proteins (when present) appear in the following order: \n";
 	arbolTXT = "_Tree.txt"; 
 	fenomaTXT= "_Phenotype.txt";
-	mutantesXLS= "_Mutants.xls";
+	mutantesXLS= "_Mutants.csv";
 	idioma ="cambiar a español";
 	losCambiosReiniciar= "Some changes will be completed after restart";
 	//de la pantalla
