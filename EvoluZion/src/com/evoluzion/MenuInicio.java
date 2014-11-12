@@ -29,6 +29,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -354,8 +355,13 @@ public class MenuInicio implements Screen, Serializable {
 		}
 		
 		catch(Exception ex){
+//			JFrame jf = new JFrame();
+//        	jf.setVisible(true);
+//    	    jf.setLocation(500, 500);
+//    	    jf.setAlwaysOnTop(true);
 			 JOptionPane.showMessageDialog(null,tx.errorEscribir);
 			ex.printStackTrace();
+			//jf.dispose();
 		}
 				
 	}
@@ -414,6 +420,7 @@ public class MenuInicio implements Screen, Serializable {
 			fis.close();
 			
 		 }catch(Exception ex){
+			 
 			 JOptionPane.showMessageDialog(null,tx.errorLectura);
 			    ingles = -1;
 			 	text.setText(tx.nombre); 
@@ -910,11 +917,14 @@ public class MenuInicio implements Screen, Serializable {
 				
 				b_Informacion.addListener(new InputListener() {
 			        public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-			       
+//			        	JFrame jf = new JFrame();
+//			        	jf.setVisible(true);
+//		        	    jf.setLocation(500, 500);
+//		        	    jf.setAlwaysOnTop(true);
 			        	
 				        JOptionPane.showMessageDialog(null, tx.mensajeSobre);
 							
-			        	
+			        	//jf.dispose();
 			        
 			            return true;
 			        }
@@ -1012,6 +1022,9 @@ public class MenuInicio implements Screen, Serializable {
 			        }});
 				
 				b_salir.addListener(new InputListener() {
+					
+					 
+		        	    
 			        public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 			        	
 			        
@@ -1019,6 +1032,11 @@ public class MenuInicio implements Screen, Serializable {
 			        }
 			        
 			        public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+//			        	JFrame jf = new JFrame();
+//			        	jf.setVisible(true);
+//		        	    jf.setLocation(500, 500);
+//		        	    jf.setAlwaysOnTop(true);
+			        	
 			        	Object[] options = {tx.si,tx.no};
 			        int n = JOptionPane.showOptionDialog(null,tx.deseaSalir,"",
 							    
@@ -1027,8 +1045,10 @@ public class MenuInicio implements Screen, Serializable {
 
 						if (n == JOptionPane.YES_OPTION) {
 			        System.exit(0);}
-			        	
-			        }});
+			        	//jf.dispose();
+			        }
+			        
+				});
 				
 				b_comenzar.addListener(new InputListener() {
 			        

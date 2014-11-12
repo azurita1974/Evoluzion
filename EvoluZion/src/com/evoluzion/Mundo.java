@@ -38,6 +38,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -136,9 +137,10 @@ String ruta,poblacion;
 StringBuffer linea, orgNombre;             //se usa para archivar los resultado
 String nombre;
 TextureAtlas textuRA_ENER, textura_ORG,textura_organismos;   // contine las imagenes
-
+Texture auraATB;
 Archivar f_datos, f_genes, f_arbol, f_proteoma, f_poblacion, f_mutantes;  //para archivar
 NumberFormat format = new DecimalFormat("0.000");
+//private Quadtree quad;
 
 
 
@@ -167,7 +169,9 @@ public Mundo(Evoluzion ev,String ruta,String nombre,String poblacion, int numOrg
 	
 	orgNombre= new StringBuffer("a");
 	
+	//quaddtree
 	
+//	quad = new Quadtree(0, new Rectangle(0,0,ancho,alto));
 	
 	// tamaño de la pantalla
 			ancho = Gdx.graphics.getWidth();
@@ -191,7 +195,7 @@ public Mundo(Evoluzion ev,String ruta,String nombre,String poblacion, int numOrg
 			textuRA_ENER = new TextureAtlas("data/energia.pack");
 			textura_ORG = new TextureAtlas("data/objetos.pack");
 			textura_organismos= new TextureAtlas("data/organ.pack");
-			
+			auraATB = new Texture("data/auraATB.png");
 				
 			
 	//agregar cuantos de energia solar
@@ -981,6 +985,8 @@ public void detectarColiciones(){
 //					if ( or.posicion.y + or.alto/2 < ca.posicion.y + ca.alto){ or.direccion.x= or.direccion.x*(-1);}
 //					if ( or.posicion.x + or.ancho/2 > ca.posicion.x){ or.direccion.y= or.direccion.y*(-1);}
 //				}}}
+			
+			
 				
 	//organismo toca otro organismo
 			
@@ -988,18 +994,32 @@ public void detectarColiciones(){
 				Organismo or = aorg.get(i);
 				Rectangle er = or.borde;
 				
-				for(int a=0; a< aorg.size;a++){
+				
+		for(int a=0; a< aorg.size;a++){
 					Organismo or2 = aorg.get(a);
 					Rectangle er2 = or2.borde;
 					
 											
-					if( er.overlaps(er2)){
+			if( er.overlaps(er2)){
+					if (a != i ){	
+			horizontalTransfer(or, or2);//horizontal transfer of genes		
+				
+					}
+				
+				
+		if(or.carnivoro==true){		
+//				for(int a=0; a< aorg.size;a++){
+//					Organismo or2 = aorg.get(a);
+//					Rectangle er2 = or2.borde;
+					
+											
+			if( er.overlaps(er2)){
 					if (a != i ){
+								
 						
-		horizontalTransfer(or, or2);//horizontal transfer of genes			
-						
-						
-		if(or.carnivoro==true && !or.identificador.equals(or2.identificador) && or.capacidad>=or2.capacidad){
+		if(!or.identificador.equals(or2.identificador) && or.capacidad>=or2.capacidad){
+			
+			
 			
 			EnRe= (int) (or.capacidad-or.energia);
 			BioRe = (int) (or.capacidad-or.biomasa);
@@ -1010,7 +1030,8 @@ public void detectarColiciones(){
 			if( BioRe >= or2.biomasa&& BioRe>0 ){or.biomasa=or.biomasa+ or2.biomasa;or2.biomasa=0;}
 			if( BioRe <or2.biomasa  && BioRe>0 ){or.biomasa= or.biomasa+ BioRe; or2.biomasa= or2.biomasa-BioRe;}
 								
-				}
+			if (or2.energia <= 0){	or2.morir();     }	
+			
 						
 			deltaX=0;
 			deltaY=0;
@@ -1031,44 +1052,44 @@ public void detectarColiciones(){
 			}
 			
 			
-			if(deltaY*deltaY>deltaX*deltaX){
-				
-			if(or.posicion.x+or.ancho>=or2.posicion.x && or.posicion.x< or2.posicion.x){or.posicion.x= or.posicion.x-(deltaX/2)-1; or2.posicion.x= or2.posicion.x+(deltaX/2)+1;
-			
-			if(or.direccion.x<=0 && or2.direccion.x<0){ or2.direccion.x=or2.direccion.x*(-1);}
-			if(or.direccion.x>=0 && or2.direccion.x<=0){ or.direccion.x= or.direccion.x*(-1);or2.direccion.x=or2.direccion.x*(-1);}
-			if(or.direccion.x>0 && or2.direccion.x>=0){ or.direccion.x=or.direccion.x*(-1);}}
-			
-			if(or2.posicion.x+or2.ancho>=or.posicion.x && or2.posicion.x< or.posicion.x){or2.posicion.x= or2.posicion.x-(deltaX/2)-1; or.posicion.x= or.posicion.x+(deltaX/2)+1;
-			
-			if(or2.direccion.x<=0 && or.direccion.x<0){ or.direccion.x=or.direccion.x*(-1);}
-			if(or2.direccion.x>0 && or.direccion.x<=0){ or2.direccion.x= or2.direccion.x*(-1);or.direccion.x=or.direccion.x*(-1);}
-			if(or2.direccion.x>0 && or.direccion.x>=0){ or2.direccion.x=or2.direccion.x*(-1);}}
-		//	if(or.direccion.x<0 && or2.direccion.x>0){ or.direccion.x= or.direccion.x*(-1);or2.direccion.x=or2.direccion.x*(-1);}
-			}
-			if(deltaY*deltaY<deltaX*deltaX){
-						
-			if(or.posicion.y+or.alto>= or2.posicion.y && or.posicion.y< or2.posicion.y){
-				
-			or.posicion.y= or.posicion.y-(deltaY/2)-1; or2.posicion.y= or2.posicion.y+(deltaY/2)+1;
-			
-			if(or.direccion.y<0 && or2.direccion.y<=0){ or2.direccion.y=or2.direccion.y*(-1);}
-			if(or.direccion.y>0 && or2.direccion.y<0){ or.direccion.y= or.direccion.y*(-1);or2.direccion.y=or2.direccion.y*(-1);}
-			if(or.direccion.y>0 && or2.direccion.y>0){ or.direccion.y=or.direccion.y*(-1);}}
-			
-			if(or2.posicion.y+or2.alto>= or.posicion.y && or2.posicion.y< or.posicion.y){
-				
-			or2.posicion.y= or2.posicion.y-(deltaY/2)-1; or.posicion.y= or.posicion.y+(deltaY/2)+1;
-			
-			if(or2.direccion.y<0 && or.direccion.y<=0){ or.direccion.y=or.direccion.y*(-1);}
-			if(or2.direccion.y>0 && or.direccion.y<0){ or2.direccion.y= or2.direccion.y*(-1);or.direccion.y=or.direccion.y*(-1);}
-			if(or2.direccion.y>0 && or.direccion.y>0){ or2.direccion.y=or2.direccion.y*(-1);}}
-			
-			}
+//			if(deltaY*deltaY>deltaX*deltaX){
+//				
+//			if(or.posicion.x+or.ancho>=or2.posicion.x && or.posicion.x< or2.posicion.x){or.posicion.x= or.posicion.x-(deltaX/2)-1; or2.posicion.x= or2.posicion.x+(deltaX/2)+1;
+//			
+//			if(or.direccion.x<=0 && or2.direccion.x<0){ or2.direccion.x=or2.direccion.x*(-1);}
+//			if(or.direccion.x>=0 && or2.direccion.x<=0){ or.direccion.x= or.direccion.x*(-1);or2.direccion.x=or2.direccion.x*(-1);}
+//			if(or.direccion.x>0 && or2.direccion.x>=0){ or.direccion.x=or.direccion.x*(-1);}}
+//			
+//			if(or2.posicion.x+or2.ancho>=or.posicion.x && or2.posicion.x< or.posicion.x){or2.posicion.x= or2.posicion.x-(deltaX/2)-1; or.posicion.x= or.posicion.x+(deltaX/2)+1;
+//			
+//			if(or2.direccion.x<=0 && or.direccion.x<0){ or.direccion.x=or.direccion.x*(-1);}
+//			if(or2.direccion.x>0 && or.direccion.x<=0){ or2.direccion.x= or2.direccion.x*(-1);or.direccion.x=or.direccion.x*(-1);}
+//			if(or2.direccion.x>0 && or.direccion.x>=0){ or2.direccion.x=or2.direccion.x*(-1);}}
+//		//	if(or.direccion.x<0 && or2.direccion.x>0){ or.direccion.x= or.direccion.x*(-1);or2.direccion.x=or2.direccion.x*(-1);}
+//			}
+//			if(deltaY*deltaY<deltaX*deltaX){
+//						
+//			if(or.posicion.y+or.alto>= or2.posicion.y && or.posicion.y< or2.posicion.y){
+//				
+//			or.posicion.y= or.posicion.y-(deltaY/2)-1; or2.posicion.y= or2.posicion.y+(deltaY/2)+1;
+//			
+//			if(or.direccion.y<0 && or2.direccion.y<=0){ or2.direccion.y=or2.direccion.y*(-1);}
+//			if(or.direccion.y>0 && or2.direccion.y<0){ or.direccion.y= or.direccion.y*(-1);or2.direccion.y=or2.direccion.y*(-1);}
+//			if(or.direccion.y>0 && or2.direccion.y>0){ or.direccion.y=or.direccion.y*(-1);}}
+//			
+//			if(or2.posicion.y+or2.alto>= or.posicion.y && or2.posicion.y< or.posicion.y){
+//				
+//			or2.posicion.y= or2.posicion.y-(deltaY/2)-1; or.posicion.y= or.posicion.y+(deltaY/2)+1;
+//			
+//			if(or2.direccion.y<0 && or.direccion.y<=0){ or.direccion.y=or.direccion.y*(-1);}
+//			if(or2.direccion.y>0 && or.direccion.y<0){ or2.direccion.y= or2.direccion.y*(-1);or.direccion.y=or.direccion.y*(-1);}
+//			if(or2.direccion.y>0 && or.direccion.y>0){ or2.direccion.y=or2.direccion.y*(-1);}}
+//			
+//			}
 			
 					}}
 						
-				}}
+				}}}}}
 	
 	
 }
@@ -1145,7 +1166,7 @@ public void dispose(){
 	
 	textuRA_ENER.dispose();
 	textura_ORG.dispose();
-	
+	auraATB.dispose();
 }
 
 }

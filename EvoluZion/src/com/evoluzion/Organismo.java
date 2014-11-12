@@ -203,7 +203,7 @@ public class Organismo implements Comparable<Organismo>{
 		imagen3.setPosition(this.posicion.x,this.posicion.y);
 		imagen3.setSize(ancho, alto);
 		
-		auraATB = new Sprite(new Texture("data/auraATB.png"));
+		auraATB = new Sprite(m.auraATB);
 		auraATB.setPosition(this.posicion.x,this.posicion.y);
 		auraATB.setSize(ancho+3, alto+3);
 		
@@ -594,6 +594,8 @@ public class Organismo implements Comparable<Organismo>{
 			
 			
 			}} m.aorg.removeValue(this, true);
+			
+			
 			// System.out.println("mori"+ m.aorg.size);
 		
 	}
