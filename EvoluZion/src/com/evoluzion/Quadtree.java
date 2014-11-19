@@ -1,26 +1,25 @@
 package com.evoluzion;
 
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.utils.Array;
 
 public class Quadtree {
-
-	private int MAX_OBJECTS = 10;
+	 
+	  private int MAX_OBJECTS = 10;
 	  private int MAX_LEVELS = 5;
 	 
 	  private int level;
-	  private Array<Organismo> aOrganismos;
-	  private Organismo organismo;
+	  Array<Organismo> objects;
+	  private Rectangle bounds;
 	  private Quadtree[] nodes;
 	 
 	 /*
 	  * Constructor
 	  */
-	  public Quadtree(int pLevel, Organismo organismo) {
+	  public Quadtree(int pLevel, Rectangle pBounds) {
 	   level = pLevel;
-	   this.aOrganismos = new Array<Organismo>();
-	   this.organismo = organismo;
+	   objects = new Array<Organismo>();
+	   bounds = pBounds;
 	   nodes = new Quadtree[4];
 	  }
 	  
@@ -28,7 +27,7 @@ public class Quadtree {
 	   * Clears the quadtree
 	   */
 	   public void clear() {
-	     aOrganismos.clear();
+	     objects.clear();
 	   
 	     for (int i = 0; i < nodes.length; i++) {
 	       if (nodes[i] != null) {
@@ -37,23 +36,22 @@ public class Quadtree {
 	       }
 	     }
 	   }
-	   
+	  
 	   /*
 	    * Splits the node into 4 subnodes
 	    */
 	    private void split() {
-	      int subWidth = (int)(organismo.ancho / 2);
-	      int subHeight = (int)(organismo.alto / 2);
-	      int x = (int)organismo.posicion.x;
-	      int y = (int)organismo.posicion.y;
+	      int subWidth = (int)(bounds.getWidth() / 2);
+	      int subHeight = (int)(bounds.getHeight() / 2);
+	      int x = (int)bounds.getX();
+	      int y = (int)bounds.getY();
 	    
-	      nodes[0] = new Quadtree(level+1, new Organismo(x + subWidth, y, subWidth, subHeight));
+	      nodes[0] = new Quadtree(level+1, new Rectangle(x + subWidth, y, subWidth, subHeight));
 	      nodes[1] = new Quadtree(level+1, new Rectangle(x, y, subWidth, subHeight));
 	      nodes[2] = new Quadtree(level+1, new Rectangle(x, y + subHeight, subWidth, subHeight));
 	      nodes[3] = new Quadtree(level+1, new Rectangle(x + subWidth, y + subHeight, subWidth, subHeight));
 	    }
-	    
-	    
+	   
 	    /*
 	     * Determine which node the object belongs to. -1 means
 	     * object cannot completely fit within a child node and is part
@@ -90,16 +88,15 @@ public class Quadtree {
 	     
 	       return index;
 	     }
-	     
-	     
+	   
 	     /*
 	      * Insert the object into the quadtree. If the node
 	      * exceeds the capacity, it will split and add all
 	      * objects to their corresponding nodes.
 	      */
-	      public void insert(Rectangle pRect) {
+	      public void insert(Organismo pRect) {
 	        if (nodes[0] != null) {
-	          int index = getIndex(pRect);
+	          int index = getIndex(pRect.borde);
 	      
 	          if (index != -1) {
 	            nodes[index].insert(pRect);
@@ -110,16 +107,16 @@ public class Quadtree {
 	      
 	        objects.add(pRect);
 	      
-	        if ( objects.size() > MAX_OBJECTS && level < MAX_LEVELS) {
-	           if (nodes[0] == null) { 
-	              split(); 
+	        if (objects.size > MAX_OBJECTS && level < MAX_LEVELS) {
+	           if (nodes[0] == null) {
+	              split();
 	           }
 	      
 	          int i = 0;
-	          while (i < objects.size()) {
-	            int index = getIndex(objects.get(i));
+	          while (i < objects.size) {
+	            int index = getIndex(objects.get(i).borde);
 	            if (index != -1) {
-	              nodes[index].insert(objects.remove(i));
+	              nodes[index].insert(objects.removeIndex(i));
 	            }
 	            else {
 	              i++;
@@ -127,12 +124,12 @@ public class Quadtree {
 	          }
 	        }
 	      }
-
+	      
 	      /*
 	       * Return all objects that could collide with the given object
 	       */
-	       public List retrieve(List returnObjects, Rectangle pRect) {
-	         int index = getIndex(pRect);
+	       public Array<Organismo>retrieve(Array<Organismo> returnObjects, Organismo pRect) {
+	         int index = getIndex(pRect.borde);
 	         if (index != -1 && nodes[0] != null) {
 	           nodes[index].retrieve(returnObjects, pRect);
 	         }
@@ -141,6 +138,4 @@ public class Quadtree {
 	       
 	         return returnObjects;
 	       }
-	  
-
-}
+	}

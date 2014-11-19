@@ -142,7 +142,7 @@ Archivar f_datos, f_genes, f_arbol, f_proteoma, f_poblacion, f_mutantes;  //para
 NumberFormat format = new DecimalFormat("0.000");
 //private Quadtree quad;
 
-
+Quadtree quad;
 
 
 
@@ -183,6 +183,8 @@ public Mundo(Evoluzion ev,String ruta,String nombre,String poblacion, int numOrg
 			aorg = new Array<Organismo>();
 			aEspesies= new Array<Organismo>();
 			aEspesiesTotales = new Array<Organismo>();
+			
+	quad = new Quadtree(0, new Rectangle(0,0,ancho,alto));		
 			
 	// set time to 0	
 			setDelta();
@@ -969,130 +971,65 @@ public void detectarColiciones(){
 					}}}}}
 			
 			
-			//organismo toca los obstaculos
-			
-//			for(int i=0; i< aorg.size;i++){
-//				Organismo or = aorg.get(i);
-//				Rectangle er = or.borde;
-//				
-//				for(int a=0; a< aCaja.size;a++){
-//					Caja ca = aCaja.get(a);
-//					Rectangle tr = ca.borde;
-//					
-//					if (er.overlaps(tr)){
-//				
-//					
-//					if ( or.posicion.y + or.alto/2 < ca.posicion.y + ca.alto){ or.direccion.x= or.direccion.x*(-1);}
-//					if ( or.posicion.x + or.ancho/2 > ca.posicion.x){ or.direccion.y= or.direccion.y*(-1);}
-//				}}}
 			
 			
-				
-	//organismo toca otro organismo
-			
-			for(int i=0; i< aorg.size;i++){
-				Organismo or = aorg.get(i);
-				Rectangle er = or.borde;
-				
-				
-		for(int a=0; a< aorg.size;a++){
-					Organismo or2 = aorg.get(a);
-					Rectangle er2 = or2.borde;
-					
-											
-			if( er.overlaps(er2)){
-					if (a != i ){	
-			horizontalTransfer(or, or2);//horizontal transfer of genes		
-				
-					}
-				
-				
-		if(or.carnivoro==true){		
-//				for(int a=0; a< aorg.size;a++){
-//					Organismo or2 = aorg.get(a);
-//					Rectangle er2 = or2.borde;
-					
-											
-			if( er.overlaps(er2)){
-					if (a != i ){
-								
-						
-		if(!or.identificador.equals(or2.identificador) && or.capacidad>=or2.capacidad){
-			
-			
-			
-			EnRe= (int) (or.capacidad-or.energia);
-			BioRe = (int) (or.capacidad-or.biomasa);
-			
-			if( EnRe >= or2.energia && EnRe>0){or.energia=or.energia+ or2.energia;or2.energia=0;}
-			if( EnRe <  or2.energia && EnRe>0){or.energia= or.energia+ EnRe; or2.energia= or2.energia-EnRe;}
-			
-			if( BioRe >= or2.biomasa&& BioRe>0 ){or.biomasa=or.biomasa+ or2.biomasa;or2.biomasa=0;}
-			if( BioRe <or2.biomasa  && BioRe>0 ){or.biomasa= or.biomasa+ BioRe; or2.biomasa= or2.biomasa-BioRe;}
-								
-			if (or2.energia <= 0){	or2.morir();     }	
-			
-						
-			deltaX=0;
-			deltaY=0;
-			
-			if(or.posicion.x<or2.posicion.x){deltaX=or.posicion.x+or.ancho-or2.posicion.x;}
-			if(or2.posicion.x<or.posicion.x){deltaX=or2.posicion.x+or2.ancho-or.posicion.x;}
-					
-			if( or.posicion.y< or2.posicion.y){ deltaY= or.posicion.y + or.alto-or2.posicion.y;}
-			if( or2.posicion.y< or.posicion.y){ deltaY= or2.posicion.y + or2.alto-or.posicion.y;}
-			
-			if(or.posicion.x==or2.posicion.x){deltaX= 0;}
-			if(or2.posicion.y==or.posicion.x){deltaY= 0;}
-			
-			if(deltaY==0 && deltaX==0){
-				
-				or.posicion.x= or.posicion.x-(deltaX/2)-1; or2.posicion.x= or2.posicion.x+(deltaX/2)+1;
-				or.posicion.y= or.posicion.y-(deltaY/2)-1; or2.posicion.y= or2.posicion.y+(deltaY/2)+1;
+			quad.clear();
+			for (int i = 0; i < aorg.size; i++) {
+			  quad.insert(aorg.get(i));
 			}
 			
+			Array<Organismo> returnObjects = new Array<Organismo>();
+			for (int i = 0; i < quad.objects.size; i++) {
+			  returnObjects.clear();
+			  quad.retrieve(returnObjects, quad.objects.get(i));
 			
-//			if(deltaY*deltaY>deltaX*deltaX){
-//				
-//			if(or.posicion.x+or.ancho>=or2.posicion.x && or.posicion.x< or2.posicion.x){or.posicion.x= or.posicion.x-(deltaX/2)-1; or2.posicion.x= or2.posicion.x+(deltaX/2)+1;
-//			
-//			if(or.direccion.x<=0 && or2.direccion.x<0){ or2.direccion.x=or2.direccion.x*(-1);}
-//			if(or.direccion.x>=0 && or2.direccion.x<=0){ or.direccion.x= or.direccion.x*(-1);or2.direccion.x=or2.direccion.x*(-1);}
-//			if(or.direccion.x>0 && or2.direccion.x>=0){ or.direccion.x=or.direccion.x*(-1);}}
-//			
-//			if(or2.posicion.x+or2.ancho>=or.posicion.x && or2.posicion.x< or.posicion.x){or2.posicion.x= or2.posicion.x-(deltaX/2)-1; or.posicion.x= or.posicion.x+(deltaX/2)+1;
-//			
-//			if(or2.direccion.x<=0 && or.direccion.x<0){ or.direccion.x=or.direccion.x*(-1);}
-//			if(or2.direccion.x>0 && or.direccion.x<=0){ or2.direccion.x= or2.direccion.x*(-1);or.direccion.x=or.direccion.x*(-1);}
-//			if(or2.direccion.x>0 && or.direccion.x>=0){ or2.direccion.x=or2.direccion.x*(-1);}}
-//		//	if(or.direccion.x<0 && or2.direccion.x>0){ or.direccion.x= or.direccion.x*(-1);or2.direccion.x=or2.direccion.x*(-1);}
-//			}
-//			if(deltaY*deltaY<deltaX*deltaX){
-//						
-//			if(or.posicion.y+or.alto>= or2.posicion.y && or.posicion.y< or2.posicion.y){
-//				
-//			or.posicion.y= or.posicion.y-(deltaY/2)-1; or2.posicion.y= or2.posicion.y+(deltaY/2)+1;
-//			
-//			if(or.direccion.y<0 && or2.direccion.y<=0){ or2.direccion.y=or2.direccion.y*(-1);}
-//			if(or.direccion.y>0 && or2.direccion.y<0){ or.direccion.y= or.direccion.y*(-1);or2.direccion.y=or2.direccion.y*(-1);}
-//			if(or.direccion.y>0 && or2.direccion.y>0){ or.direccion.y=or.direccion.y*(-1);}}
-//			
-//			if(or2.posicion.y+or2.alto>= or.posicion.y && or2.posicion.y< or.posicion.y){
-//				
-//			or2.posicion.y= or2.posicion.y-(deltaY/2)-1; or.posicion.y= or.posicion.y+(deltaY/2)+1;
-//			
-//			if(or2.direccion.y<0 && or.direccion.y<=0){ or.direccion.y=or.direccion.y*(-1);}
-//			if(or2.direccion.y>0 && or.direccion.y<0){ or2.direccion.y= or2.direccion.y*(-1);or.direccion.y=or.direccion.y*(-1);}
-//			if(or2.direccion.y>0 && or.direccion.y>0){ or2.direccion.y=or2.direccion.y*(-1);}}
-//			
-//			}
-			
-					}}
+	 //Organismo toca organismo
+			  
+			  for (int x = 0; x < returnObjects.size; x++) {
+			   
+					Organismo or = returnObjects.get(i);
+					Rectangle er = or.borde;
+					
+					
+			for(int a=0; a< returnObjects.size;a++){
+						Organismo or2 = returnObjects.get(a);
+						Rectangle er2 = or2.borde;
 						
-				}}}}}
+												
+				if( er.overlaps(er2)){
+						if (a != i ){	
+				horizontalTransfer(or, or2);//horizontal transfer of genes
+				
+				//	System.out.println("Colision");
+						}
+					
+					
+			if(or.carnivoro==true){		
+								
+							
+			if(!or.identificador.equals(or2.identificador) && or.capacidad>=or2.capacidad){
+				
+				
+				
+				EnRe= (int) (or.capacidad-or.energia);
+				BioRe = (int) (or.capacidad-or.biomasa);
+				
+				if( EnRe >= or2.energia && EnRe>0){or.energia=or.energia+ or2.energia;or2.energia=0;}
+				if( EnRe <  or2.energia && EnRe>0){or.energia= or.energia+ EnRe; or2.energia= or2.energia-EnRe;}
+				
+				if( BioRe >= or2.biomasa&& BioRe>0 ){or.biomasa=or.biomasa+ or2.biomasa;or2.biomasa=0;}
+				if( BioRe <or2.biomasa  && BioRe>0 ){or.biomasa= or.biomasa+ BioRe; or2.biomasa= or2.biomasa-BioRe;}
+									
+				if (or2.energia <= 0){	or2.morir();     }	
+				
+				
+				
+						}}
+							
+					}}}}} 			  
+		
 	
-	
-}
+
 
 //Horizontal transfer
 
