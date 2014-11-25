@@ -82,6 +82,7 @@ public class Organismo implements Comparable<Organismo>{
 	boolean sentir;     //capacidad de sensar el entornno por comida
 	boolean cazar;       //capacidad de buscar su comida
 	boolean escapar;
+	boolean transferred= false;
 
 	long edad, delta,delta2;   //se usa para determinar el paso del tiempo
 	Genoma adn;         //genoma
@@ -101,6 +102,8 @@ public class Organismo implements Comparable<Organismo>{
 	char base;//nucleotido
 
 	private int resistenciaI;
+
+	private Sprite transferido;
 
 	
 	
@@ -123,6 +126,25 @@ public class Organismo implements Comparable<Organismo>{
 		direccion= new Vector2();
 		borde = new Rectangle();
 		
+		
+		translate();
+
+		segundos=0;		
+		setTime();
+		setEdad();
+		setDelta();
+     
+		
+		 identificador = new String(Identificar(m));
+		
+		
+		if(capacidad<=0){capacidad=1; morir();}
+		
+		//System.out.println("identificador"+identificador);
+		
+	}
+	
+	public void translate(){
 		
 		speed= (adn.traducirMagnitud(this,adn.speed,".[RKH][LMI][LMI].....Q[AG]........")/250)/m.zoom;
 		ancho= (int) (adn.traducirMagnitud(this, adn.ancho, "..[RKH][R]......S[KRH]..")/224)/m.zoom;
@@ -207,25 +229,17 @@ public class Organismo implements Comparable<Organismo>{
 		auraATB.setPosition(this.posicion.x,this.posicion.y);
 		auraATB.setSize(ancho+3, alto+3);
 		
+		transferido = new Sprite(m.transferido);
+		transferido.setPosition(this.posicion.x,this.posicion.y);
+		transferido.setSize(ancho+5, alto+5);
+		
 		
 		borde.height= alto;
 		borde.width=  ancho;
-	
-
-		segundos=0;		
-		setTime();
-		setEdad();
-		setDelta();
-     
 		
-		 identificador = new String(Identificar(m));
-		
-		
-		if(capacidad<=0){capacidad=1; morir();}
-		
-		//System.out.println("identificador"+identificador);
 		
 	}
+	
 	
 	// permite al programa saber se un organismo es diferente uno de otro
 	public String Identificar(Mundo mu){
@@ -246,19 +260,6 @@ public class Organismo implements Comparable<Organismo>{
 		if(mu.colectarTemp==true){sb.append((int)this.toleranciaTemp*100);}
 		if(mu.colectarResistencia==true){sb.append(this.resistenciaI);}
 		
-//		if(mu.colectColor==true){sb.append(this.adn.traducir(adn.color));}
-//		if(mu.colectarancho==true){sb.append(this.adn.traducir(adn.ancho));}
-//		if(mu.colectaralto==true){sb.append(this.adn.traducir(adn.alto));}
-//		if(mu.colectSpeed==true){sb.append(this.adn.traducir(adn.speed));}
-//		if(mu.colectRadioconsiente==true){sb.append(this.adn.traducir(adn.radioConsiente));}
-//		if(mu.colectarLongevidad==true){sb.append(this.adn.traducir(adn.longevidad));}
-//		if(mu.colectarTasaMut==true){sb.append(this.adn.traducir(adn.tasaMutacion));}
-//		if(mu.colectSentir==true){sb.append(this.adn.traducir(adn.sentir));}
-//		if(mu.colectPredador==true){sb.append(this.adn.traducir(adn.predador));}
-//		if(mu.colectEscapar==true){sb.append(this.adn.traducir(adn.escapar));}
-//		if(mu.colectCazar==true){sb.append(this.adn.traducir(adn.cazar));}
-//		if(mu.colectarTemp==true){sb.append(this.adn.traducir(adn.toleranciaTemp));}
-//		if(mu.colectarResistencia==true){sb.append(this.adn.traducir(adn.resistenciaATB));}
 		
 		return sb.toString();
 		
@@ -269,9 +270,11 @@ public class Organismo implements Comparable<Organismo>{
 		
 		sb.begin();
 		imagen.draw(sb);
+		if (transferred == true){transferido.draw(sb);}
 		if(carnivoro==true){imagen2.draw(sb);}
 		if(sentir==true){imagen3.draw(sb);}
 		if(resistenciaATB==true){auraATB.draw(sb);}
+	
 		sb.end();
 		
 	}
@@ -333,17 +336,13 @@ public class Organismo implements Comparable<Organismo>{
 	
 	
 	imagen.setPosition(posicion.x,posicion.y);
-	//imagen.setSize(ancho, alto);
 	imagen2.setPosition(posicion.x,posicion.y);
-	//imagen2.setSize(ancho, alto);
 	imagen3.setPosition(posicion.x,posicion.y);
-	//imagen3.setSize(ancho, alto);
 	auraATB.setPosition(posicion.x-1.5f,posicion.y-1.5f);
+	transferido.setPosition(posicion.x-2.5f,posicion.y-2.5f);
 	
 	borde.x=posicion.x;
 	borde.y=posicion.y;
-	//borde.height= alto;
-	//borde.width=  ancho;
 	
 	//direccion.x= (float) Math.sqrt((this.SPEED*this.SPEED) - (direccion.y*direccion.y));
 		
@@ -702,6 +701,7 @@ if(segundos>= tiempoMitosis/1000 && m.aorg.size<m.maximo){
 	 or.energia= ener;
 	 or.biomasa=bio;
 	 or.marcado = 1*marcado;
+	 or.transferred = transferred;
 	 m.aorg.add( or);
 	
 	Vector2 pos2 = new Vector2( (float) posicion.x-((ancho)+3)/2 , (float) posicion.y );
@@ -715,6 +715,8 @@ if(segundos>= tiempoMitosis/1000 && m.aorg.size<m.maximo){
 	 or2.energia= ener2;
 	 or2.biomasa=bio2;
 	 or2.marcado = 1*marcado;
+	 or2.transferred = transferred;
+	 
 	m.aorg.add( or2 );
 	
 	if (!this.identificador.equals(or.identificador)){

@@ -24,7 +24,7 @@ public class Main {
 	public static void main(String[] args) {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 	//	System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
-		cfg.title = "EvoluZion 1.3.1.0";
+		cfg.title = "EvoluZion 1.4.0";
 		cfg.useGL20 = true;
 		cfg.vSyncEnabled=true;
 		cfg.resizable=true;

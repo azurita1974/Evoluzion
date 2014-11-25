@@ -137,7 +137,7 @@ String ruta,poblacion;
 StringBuffer linea, orgNombre;             //se usa para archivar los resultado
 String nombre;
 TextureAtlas textuRA_ENER, textura_ORG,textura_organismos;   // contine las imagenes
-Texture auraATB;
+Texture auraATB,transferido;
 Archivar f_datos, f_genes, f_arbol, f_proteoma, f_poblacion, f_mutantes;  //para archivar
 NumberFormat format = new DecimalFormat("0.000");
 //private Quadtree quad;
@@ -198,6 +198,7 @@ public Mundo(Evoluzion ev,String ruta,String nombre,String poblacion, int numOrg
 			textura_ORG = new TextureAtlas("data/objetos.pack");
 			textura_organismos= new TextureAtlas("data/organ.pack");
 			auraATB = new Texture("data/auraATB.png");
+			transferido= new Texture("data/Transferido.png");
 				
 			
 	//agregar cuantos de energia solar
@@ -593,6 +594,17 @@ public void leerArchivoPoblacion(){
 				   or.direccion.y= (float) (Math.random()*10);
 					aorg.add(or);
 				}
+				
+				int o = BiomasaTotal()/Qbiomasa;
+				//System.out.println(BiomasaTotal());
+				for (int i =0; i < o; i++){
+					 
+					 Qenergia qe = aqe.get(i);
+						qe.visible=false; 
+						
+						}
+				
+				Masatotal=MateriaLibre()+BiomasaTotal();
 							
 				br.close();
 				fr.close();
@@ -1096,6 +1108,9 @@ public void horizontalTransfer(Organismo or1, Organismo or2){
    
 	}
 	 //System.out.println("Se tranfirio un gen");
+	or1.transferred=true;
+	or1.translate();
+	
 	}}	
 }
 
